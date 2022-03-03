@@ -8,7 +8,7 @@ Class {
 	#category : #MyLinkedList
 }
 
-{ #category : #initialization }
+{ #category : #adding }
 MyLinkedList >> addLLNode: valu [
 	| newNode last |
 	newNode := Node new setValu: valu.
@@ -35,7 +35,7 @@ MyLinkedList >> find: valu [
 	^ false
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 MyLinkedList >> head [
 	^ head
 ]
@@ -56,7 +56,7 @@ MyLinkedList >> linksize [
 	^ linksize
 ]
 
-{ #category : #initialization }
+{ #category : #adding }
 MyLinkedList >> pushFront: value [
 	| noden |
 	linksize := linksize + 1.
@@ -66,7 +66,7 @@ MyLinkedList >> pushFront: value [
 
 ]
 
-{ #category : #initialization }
+{ #category : #removing }
 MyLinkedList >> removeLastNode [
 	| newNode |
 	newNode := head.
@@ -79,7 +79,7 @@ MyLinkedList >> removeLastNode [
 	^ head
 ]
 
-{ #category : #initialization }
+{ #category : #printing }
 MyLinkedList >> showLL [
 	| newNode |
 	newNode := head.

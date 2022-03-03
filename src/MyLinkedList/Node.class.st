@@ -9,28 +9,28 @@ Class {
 }
 
 { #category : #initialization }
-Node >> getNext [
-	^ next
-]
-
-{ #category : #initialization }
-Node >> getValue [
-	^ data
-]
-
-{ #category : #initialization }
 Node >> initialize [
 	data := 0.
 	
 	
 ]
 
-{ #category : #initialization }
-Node >> setNext: nex [
-	next:=nex
+{ #category : #accessing }
+Node >> next [
+	^ next
 ]
 
-{ #category : #initialization }
-Node >> setValu: valu [
-	data:= valu
+{ #category : #accessing }
+Node >> next: aNode [
+	next:=aNode
+]
+
+{ #category : #accessing }
+Node >> value [
+	^ data
+]
+
+{ #category : #accessing }
+Node >> value: aNumber [
+	data:= aNumber
 ]
