@@ -10,6 +10,7 @@ Class {
 
 { #category : #initialization }
 Node >> initialize [
+	super initialize.
 	data := 0.
 	
 	

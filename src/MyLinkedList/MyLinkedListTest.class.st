@@ -8,18 +8,31 @@ Class {
 MyLinkedListTest >> testEmpty [
 	| m |
 	m := MyLinkedList new.
-	self assert: (m isEmpty) equals: true.
-	m addLLNode: 6.
-	self assert: (m isEmpty) equals: false.
+	self assert: (m isEmpty).
+	m pushBack: 6.
+	self deny:  (m isEmpty) .
+]
+
+{ #category : #'as yet unclassified' }
+MyLinkedListTest >> testMyLinkedListAddingAtPositionIsOk [
+	| m |
+	m := MyLinkedList new.
+	m pushBack: 6.
+	m pushBack: 8.
+	m pushBack: 9.
+	self assert: m linksize equals: 3.
+	m push: 7 at: 2.
+	self assert: m linksize equals: 4.
+
 ]
 
 { #category : #'as yet unclassified' }
 MyLinkedListTest >> testMyLinkedListAddingIsOk [
 	| m |
 	m := MyLinkedList new.
-	m addLLNode: 6.
+	m pushBack: 6.
 	self assert: m linksize equals: 1.
-	m addLLNode: 8.
+	m pushBack: 8.
 	self assert: m linksize equals: 2.
 
 ]
@@ -35,9 +48,9 @@ MyLinkedListTest >> testMyLinkedListInitializationIsOk [
 MyLinkedListTest >> testMyLinkedListRemovingIsOk [
 	| m |
 	m := MyLinkedList new.
-	m addLLNode: 6.
+	m pushBack: 6.
 	self assert: m linksize equals: 1.
-	m addLLNode: 8.
+	m pushBack: 8.
 	self assert: m linksize equals: 2.
 	m removeLastNode  .
 	self assert: m linksize equals: 1.
@@ -50,8 +63,8 @@ MyLinkedListTest >> testMyLinkedListRemovingIsOk [
 MyLinkedListTest >> testfindLLNode [
 	| m |
 	m := MyLinkedList new.
-	m addLLNode: 6.
-	m addLLNode: 8.
+	m pushBack: 6.
+	m pushBack: 8.
 	self assert: (m find: 6) equals: true.
 	self assert: (m find: 3) equals: false.
 ]

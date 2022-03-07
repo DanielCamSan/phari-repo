@@ -3,34 +3,20 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'head',
+		'tail',
 		'linksize'
 	],
 	#category : #MyLinkedList
 }
 
-{ #category : #adding }
-MyLinkedList >> addLLNode: valu [
-	| newNode last |
-	newNode := Node new setValu: valu.
-	head
-		ifNil: [ head := newNode.
-			linksize := linksize + 1 ]
-		ifNotNil: [ :arg | 
-			last := head.
-			[ last getNext isNotNil ] whileTrue: [ last := last getNext ].
-			linksize := linksize + 1.
-			last setNext: newNode ]
-]
-
-{ #category : #initialization }
-MyLinkedList >> find: valu [
-	| nod |
-	
-	nod:=head.
-	(valu == nod getValue) ifTrue: [ ^ true ].
-	[ nod getNext isNotNil  ] whileTrue: 
-	[ (valu == nod getValue) ifTrue: [ ^ true ]
-		ifFalse:[ nod:= nod getNext ]
+{ #category : #operation }
+MyLinkedList >> find: aNumber [
+	| node |
+	node:=head.
+	(aNumber == node value) ifTrue: [ ^ true ].
+	[ node next isNotNil  ] whileTrue: 
+	[ (aNumber == node value) ifTrue: [ ^ true ]
+		ifFalse:[ node:= node next ]
 	 ].
 	^ false
 ]
@@ -46,24 +32,63 @@ MyLinkedList >> initialize [
 	linksize := 0
 ]
 
-{ #category : #initialization }
+{ #category : #operation }
 MyLinkedList >> isEmpty [ 
 	^ linksize == 0
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 MyLinkedList >> linksize [
 	^ linksize
 ]
 
 { #category : #adding }
-MyLinkedList >> pushFront: value [
-	| noden |
+MyLinkedList >> push: aNumber at: aPosition [
+	| node newNode nextNode |
+	aPosition == 1 ifTrue: [ self pushFront: aNumber. ^ head  ].
+	aPosition == ((self linksize) + 1) ifTrue: [ self pushBack: aNumber. ^ head ].
 	linksize := linksize + 1.
-	noden:= Node new:value.
-	noden setNext:head.
-	head:= noden.
+	node:=head.
+	(aPosition - 2) timesRepeat: 
+	[ node:=node next ].
+	nextNode:=node next.
+	newNode:= Node new value:aNumber.
+	newNode next:nextNode.
+	node next:newNode.
 
+
+	
+
+]
+
+{ #category : #adding }
+MyLinkedList >> pushBack: aNumber [
+	| node |
+	linksize := linksize + 1.
+	node:= Node new value:aNumber.
+	tail  ifNil: [ head:=node. tail:=node. ^ head ].
+	tail next:node.
+	tail:= node.
+
+]
+
+{ #category : #adding }
+MyLinkedList >> pushFront: aNumber [
+	| node |
+	linksize := linksize + 1.
+	node:= Node new:aNumber.
+	node next:head.
+	head  ifNil: [ tail:=node ].
+	head:= node.
+
+]
+
+{ #category : #removing }
+MyLinkedList >> removeFirstNode [
+	head ifNil: [ ^ nil ].
+	head next ifNil: [ linksize := linksize - 1. head:= nil. ^ nil ].
+	head:= head next.
+	^ head
 ]
 
 { #category : #removing }
@@ -71,11 +96,12 @@ MyLinkedList >> removeLastNode [
 	| newNode |
 	newNode := head.
 	head ifNil: [ ^ nil ].
-	head getNext ifNil: [ linksize := linksize - 1. head:= nil. ^ nil ].
-	[ newNode getNext getNext isNotNil  ] whileTrue:
-	[ newNode:= newNode getNext ].
+	head next ifNil: [ linksize := linksize - 1. head:= nil. tail:=nil.  ^ nil ].
+	[ newNode next == tail ] whileFalse:
+	[ newNode:= newNode next ].
 	linksize := linksize - 1. 
-	newNode setNext: nil.
+	newNode next: nil.
+	tail:=newNode.
 	^ head
 ]
 
@@ -83,7 +109,7 @@ MyLinkedList >> removeLastNode [
 MyLinkedList >> showLL [
 	| newNode |
 	newNode := head.
-	[ newNode getNext  isNotNil  ] whileTrue:
-	[ Transcript  show: newNode getValue; cr. newNode :=newNode getNext ].
-	 Transcript  show: newNode getValue; cr.
+	[ newNode ==  tail  ] whileFalse:
+	[ Transcript  show: newNode value; cr. newNode :=newNode next ].
+	 Transcript  show: newNode value; cr.
 ]
