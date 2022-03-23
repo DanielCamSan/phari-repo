@@ -11,9 +11,7 @@ Class {
 { #category : #initialization }
 Node >> initialize [
 	super initialize.
-	data := 0.
-	
-	
+	data := 0
 ]
 
 { #category : #accessing }
@@ -23,7 +21,7 @@ Node >> next [
 
 { #category : #accessing }
 Node >> next: aNode [
-	next:=aNode
+	next := aNode
 ]
 
 { #category : #accessing }
@@ -33,5 +31,5 @@ Node >> value [
 
 { #category : #accessing }
 Node >> value: aNumber [
-	data:= aNumber
+	data := aNumber
 ]
